@@ -5,12 +5,12 @@ import java.util.ArrayList;
 class App {
 
     private int tiempoSimulado = 0;
-    private int valorDeMilisegundo = 50;
+    private int valorDeMilisegundo = 20;
     // valor de intercaambio 0.2
     private int valorIntercambio = 10;
-    private double valorIntercambioQuantun = 0.2;
+    private double valorIntercambioQuantun = 0.5;
     private ArrayList<Proceso> procesos = new ArrayList<Proceso>();
-    private ArrayList<Proceso> colaListos = new ArrayList<Proceso>();
+    private ArrayList<Proceso> colaDeGantt = new ArrayList<Proceso>();
     private ArrayList<Proceso> colaBloqueados = new ArrayList<Proceso>();
 
 
@@ -24,9 +24,9 @@ class App {
          * estado debe ser 0 inicialmente
          * como minimo debe de haber un proceso
           */
-        this.procesos.add(new Proceso(0,2,2,1,"test1",0));
-        this.procesos.add(new Proceso(55,1,0,0,"test2",0));
-        this.procesos.add(new Proceso(55,1,0,0,"test2",0));
+        this.procesos.add(new Proceso(0,2,2,1,"P0",0));
+        this.procesos.add(new Proceso(25,3,0,0,"P1",0));
+        this.procesos.add(new Proceso(35,2,0,0,"P2",0));
         // this.procesos.add(new Proceso(60,1,1,1,"test3",0));
 		/*
 		/*
@@ -45,8 +45,8 @@ class App {
         Proceso primerProceso = procesos.get(0);
         agregarProcesoAColaDeListos(primerProceso, 0);
 
-        for (int i = 0; i < colaListos.size(); i++) {
-            Proceso procesoListo = colaListos.get(i);
+        for (int i = 0; i < colaDeGantt.size(); i++) {
+            Proceso procesoListo = colaDeGantt.get(i);
             if (procesoListo.getEstado() != 3) {
                 this.guardarTiempo(procesoListo, i);
             }
@@ -86,7 +86,7 @@ class App {
     }
 
     private void getProcesosFueraDeRango(int iteracion) {
-        if (iteracion == (colaListos.size() - 1)) {
+        if (iteracion == (colaDeGantt.size() - 1)) {
             getMenorProcesoDisponible();
             getMenorBloqueadoDisponible();
         }
@@ -122,7 +122,7 @@ class App {
 
     private void agregarProcesoAColaDeListos(Proceso proceso, int estado) {
         proceso.setEstado(1);
-        colaListos.add(new Proceso(proceso.getTiempoDeLlegada(), proceso.getQuantumsNecesarios(), proceso.getNumeroDeEntradasSalidas(), proceso.getQuantumsGpu(), proceso.getNombre(), estado));
+        colaDeGantt.add(new Proceso(proceso.getTiempoDeLlegada(), proceso.getQuantumsNecesarios(), proceso.getNumeroDeEntradasSalidas(), proceso.getQuantumsGpu(), proceso.getNombre(), estado));
     }
 
     private void agregarIntercambio(int i) {
@@ -130,7 +130,7 @@ class App {
         quantium.setInicio(this.tiempoSimulado);
         this.tiempoSimulado += valorIntercambio;
         quantium.setTerminacion(tiempoSimulado);
-        colaListos.add(i+1 ,quantium);
+        colaDeGantt.add(i+1 ,quantium);
     }
 
     private void agregarProcesoAColaDeListosBajarQuantum(Proceso proceso, int estado) {
@@ -138,7 +138,7 @@ class App {
         if (proceso.getTerminacion() >= tiempoSimulado) {
             tiempoDeLlegada = proceso.getTerminacion();
         }
-        colaListos.add(new Proceso(tiempoDeLlegada, proceso.getQuantumsNecesarios() -1, proceso.getNumeroDeEntradasSalidas(), proceso.getQuantumsGpu(), proceso.getNombre(), estado));
+        colaDeGantt.add(new Proceso(tiempoDeLlegada, proceso.getQuantumsNecesarios() -1, proceso.getNumeroDeEntradasSalidas(), proceso.getQuantumsGpu(), proceso.getNombre(), estado));
     }
 
     private void guardarTiempo(Proceso proceso, int i) {
@@ -196,8 +196,8 @@ class App {
     private void mostrarColaDeListo() {
         System.out.println();
         StringBuilder nombres = new StringBuilder();
-        for (int i = 0; i < this.colaListos.size(); i++) {
-            Proceso p = this.colaListos.get(i);
+        for (int i = 0; i < this.colaDeGantt.size(); i++) {
+            Proceso p = this.colaDeGantt.get(i);
             if (!p.getNombre().matches("intercambio" )) {
                 nombres.append(" | ").append(p.getNombre()).append(" / ").append(p.getQuantumsNecesarios());
             }
@@ -215,8 +215,8 @@ class App {
     private void mostrarDiagramaDeGantt() {
         System.out.println();
         StringBuilder nombres = new StringBuilder();
-        for (int i = 0; i < this.colaListos.size(); i++) {
-            Proceso p = this.colaListos.get(i);
+        for (int i = 0; i < this.colaDeGantt.size(); i++) {
+            Proceso p = this.colaDeGantt.get(i);
             nombres.append(" | ").append(p.getInicio()).append(" / ").append(p.getNombre()).append(" / ").append(p.getTerminacion());
         }
         nombres.append(" |");
@@ -240,8 +240,8 @@ class App {
     private Proceso getProcesoMaxTerminal(String nombreProceso) {
         Proceso maxProceso = null;
         int terminacion = 0;
-        for (int i = 0; i < this.colaListos.size(); i++) {
-            Proceso p = this.colaListos.get(i);
+        for (int i = 0; i < this.colaDeGantt.size(); i++) {
+            Proceso p = this.colaDeGantt.get(i);
             if (p.getTerminacion() > terminacion && p.getNombre().matches(nombreProceso)) {
                 terminacion = p.getTerminacion();
                 maxProceso = p;
@@ -251,8 +251,8 @@ class App {
     }
 
     private Proceso getProcesoMinTerminal(String nombreProceso) {
-        for (int i = 0; i < this.colaListos.size(); i++) {
-            Proceso p = this.colaListos.get(i);
+        for (int i = 0; i < this.colaDeGantt.size(); i++) {
+            Proceso p = this.colaDeGantt.get(i);
             if (p.getNombre().matches(nombreProceso)) {
                 return p;
             }
