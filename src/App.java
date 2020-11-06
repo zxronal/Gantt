@@ -6,7 +6,9 @@ class App {
 
     private int tiempoSimulado = 0;
     private int valorDeMilisegundo = 50;
-    private int milisegundosPermitidos = 1;
+    // valor de intercaambio 0.2
+    private int valorIntercambio = 10;
+    private double valorIntercambioQuantun = 0.2;
     private ArrayList<Proceso> procesos = new ArrayList<Proceso>();
     private ArrayList<Proceso> colaListos = new ArrayList<Proceso>();
     private ArrayList<Proceso> colaBloqueados = new ArrayList<Proceso>();
@@ -23,8 +25,9 @@ class App {
          * como minimo debe de haber un proceso
           */
         this.procesos.add(new Proceso(0,2,2,1,"test1",0));
-        this.procesos.add(new Proceso(55,3,0,0,"test2",0));
-        this.procesos.add(new Proceso(60,1,1,1,"test3",0));
+        this.procesos.add(new Proceso(55,1,0,0,"test2",0));
+        this.procesos.add(new Proceso(55,1,0,0,"test2",0));
+        // this.procesos.add(new Proceso(60,1,1,1,"test3",0));
 		/*
 		/*
 		int modoOperacion = 0;
@@ -44,9 +47,11 @@ class App {
 
         for (int i = 0; i < colaListos.size(); i++) {
             Proceso procesoListo = colaListos.get(i);
-            this.guardarTiempo(procesoListo);
+            if (procesoListo.getEstado() != 3) {
+                this.guardarTiempo(procesoListo, i);
+            }
             this.getProcesos();
-            if (procesoListo.getQuantumsNecesarios() > 1) {
+            if (procesoListo.getQuantumsNecesarios() > 1 && procesoListo.getEstado() != 3) {
                 this.agregarProcesoAColaDeListosBajarQuantum(procesoListo, 0);
             }
             this.getProcesosDesdeBloqueado();
@@ -96,6 +101,7 @@ class App {
             }
         }
         if (pr != null) {
+            tiempoSimulado = pr.getTiempoDeLlegada();
             this.agregarProcesoAColaDeListos(pr, 0);
         }
     }
@@ -109,6 +115,7 @@ class App {
             }
         }
         if (pr != null) {
+            tiempoSimulado = pr.getTiempoDeLlegada();
             this.agregarProcesoAColaDeListos(pr, 2);
         }
     }
@@ -116,6 +123,14 @@ class App {
     private void agregarProcesoAColaDeListos(Proceso proceso, int estado) {
         proceso.setEstado(1);
         colaListos.add(new Proceso(proceso.getTiempoDeLlegada(), proceso.getQuantumsNecesarios(), proceso.getNumeroDeEntradasSalidas(), proceso.getQuantumsGpu(), proceso.getNombre(), estado));
+    }
+
+    private void agregarIntercambio(int i) {
+        Proceso quantium = new Proceso(tiempoSimulado, valorIntercambioQuantun, 0, 0, "intercambio", 3);
+        quantium.setInicio(this.tiempoSimulado);
+        this.tiempoSimulado += valorIntercambio;
+        quantium.setTerminacion(tiempoSimulado);
+        colaListos.add(i+1 ,quantium);
     }
 
     private void agregarProcesoAColaDeListosBajarQuantum(Proceso proceso, int estado) {
@@ -126,7 +141,7 @@ class App {
         colaListos.add(new Proceso(tiempoDeLlegada, proceso.getQuantumsNecesarios() -1, proceso.getNumeroDeEntradasSalidas(), proceso.getQuantumsGpu(), proceso.getNombre(), estado));
     }
 
-    private void guardarTiempo(Proceso proceso) {
+    private void guardarTiempo(Proceso proceso, int i) {
         if (proceso.getTiempoDeLlegada() == -1) {
             proceso.setTiempoDeLlegada(tiempoSimulado);
         }
@@ -134,11 +149,12 @@ class App {
         // despues mirar como hacer lo de los verdes
         this.tiempoSimulado += this.valorDeMilisegundo;
         proceso.setTerminacion(tiempoSimulado);
+        this.agregarIntercambio(i);
     }
 
 // Mirar lo de quatums adicionales gpu
     private void agregarProcesoAColaDeBloqueados(Proceso proceso) {
-        int tiempoDeLlegada = tiempoSimulado + (proceso.getNumeroDeEntradasSalidas() * this.valorDeMilisegundo);
+        int tiempoDeLlegada = proceso.getTerminacion() + (proceso.getNumeroDeEntradasSalidas() * this.valorDeMilisegundo);
         System.out.println("El proceso " + proceso.getNombre() + "estara bloqueado desde el milisegundo " + tiempoSimulado + " hasta " + tiempoDeLlegada);
         this.colaBloqueados.add(new Proceso(tiempoDeLlegada, proceso.getQuantumsNecesarios() + proceso.getQuantumsGpu() -1, proceso.getNumeroDeEntradasSalidas(), proceso.getQuantumsGpu(), proceso.getNombre(), 0));
     }
@@ -182,7 +198,9 @@ class App {
         StringBuilder nombres = new StringBuilder();
         for (int i = 0; i < this.colaListos.size(); i++) {
             Proceso p = this.colaListos.get(i);
-            nombres.append(" | ").append(p.getNombre()).append(" / ").append(p.getQuantumsNecesarios());
+            if (!p.getNombre().matches("intercambio" )) {
+                nombres.append(" | ").append(p.getNombre()).append(" / ").append(p.getQuantumsNecesarios());
+            }
          }
         nombres.append(" |");
         nombres.deleteCharAt(0);

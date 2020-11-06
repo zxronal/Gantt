@@ -1,6 +1,6 @@
 class Proceso {
     private int tiempoDeLlegada;
-    private int quantumsNecesarios;
+    private double quantumsNecesarios;
     private int numeroDeEntradasSalidas = 0;
     private int quantumsGpu;
     private int inicio;
@@ -13,7 +13,7 @@ class Proceso {
     public Proceso() {
     }
 
-    public Proceso(int tiempoDeLlegada, int quantumsNecesarios, int numeroDeEntradasSalidas, int quantumsGpu, String nombre, int estado) {
+    public Proceso(int tiempoDeLlegada, double quantumsNecesarios, int numeroDeEntradasSalidas, int quantumsGpu, String nombre, int estado) {
         this.tiempoDeLlegada = tiempoDeLlegada;
         this.quantumsNecesarios = quantumsNecesarios;
         this.numeroDeEntradasSalidas = numeroDeEntradasSalidas;
@@ -38,11 +38,11 @@ class Proceso {
         this.tiempoDeLlegada = tiempoDeLlegada;
     }
 
-    public int getQuantumsNecesarios() {
+    public double getQuantumsNecesarios() {
         return quantumsNecesarios;
     }
 
-    public void setQuantumsNecesarios(int quantumsNecesarios) {
+    public void setQuantumsNecesarios(double quantumsNecesarios) {
         this.quantumsNecesarios = quantumsNecesarios;
     }
 
