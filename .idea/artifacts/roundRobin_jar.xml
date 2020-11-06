@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="roundRobin:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/roundRobin_jar</output-path>
+    <root id="archive" name="roundRobin.jar">
+      <element id="module-output" name="RoundRobin" />
+    </root>
+  </artifact>
+</component>
