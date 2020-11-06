@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 class App {
 
@@ -157,6 +158,16 @@ class App {
         int tiempoDeLlegada = proceso.getTerminacion() + (proceso.getNumeroDeEntradasSalidas() * this.valorDeMilisegundo);
         System.out.println("El proceso " + proceso.getNombre() + "estara bloqueado desde el milisegundo " + tiempoSimulado + " hasta " + tiempoDeLlegada);
         this.colaBloqueados.add(new Proceso(tiempoDeLlegada, proceso.getQuantumsNecesarios() + proceso.getQuantumsGpu() -1, proceso.getNumeroDeEntradasSalidas(), proceso.getQuantumsGpu(), proceso.getNombre(), 0));
+        ordenarColaDeBloqueadosPorOrdenDeLLegada();
+    }
+
+    private void ordenarColaDeBloqueadosPorOrdenDeLLegada() {
+        this.colaBloqueados.sort(new Comparator<Proceso>() {
+            @Override
+            public int compare(Proceso proceso, Proceso t1) {
+                return Integer.compare(proceso.getTiempoDeLlegada(), t1.getTiempoDeLlegada());
+            }
+        });
     }
 
     private void calcularTiempoDeVuelta() {
