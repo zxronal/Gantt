@@ -5,10 +5,10 @@ import java.util.ArrayList;
 class App {
 
     private int tiempoSimulado = 0;
-    private int valorDeMilisegundo = 20;
+    private int valorDeMilisegundo = 50;
     // valor de intercaambio 0.2
     private int valorIntercambio = 10;
-    private double valorIntercambioQuantun = 0.5;
+    private double valorIntercambioQuantun = 0.2;
     private ArrayList<Proceso> procesos = new ArrayList<Proceso>();
     private ArrayList<Proceso> colaDeGantt = new ArrayList<Proceso>();
     private ArrayList<Proceso> colaBloqueados = new ArrayList<Proceso>();
