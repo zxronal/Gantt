@@ -7,10 +7,10 @@ import java.util.Comparator;
 class App {
 
     private int tiempoSimulado = 0;
-    private int valorDeMilisegundo = 50;
+    private int valorDeMilisegundo = 0;
     // valor de intercaambio 0.2
-    private int valorIntercambio = 10;
-    private double valorIntercambioQuantun = 0.2;
+    private int valorIntercambio = 0;
+    private double valorIntercambioQuantun = 0;
     private ArrayList<Proceso> procesos = new ArrayList<Proceso>();
     private ArrayList<Proceso> colaDeGantt = new ArrayList<Proceso>();
     private ArrayList<Proceso> colaBloqueados = new ArrayList<Proceso>();
@@ -18,8 +18,33 @@ class App {
 
 
     void run () throws IOException {
-		int numeroDeProcesos = 0;
 
+        do {
+            System.out.println("Ingrese el valor del quantum en milisegundos:");
+            String valorRead= reader.readLine();
+            if (valorRead.matches("^[1-9][0-9]*$")) {
+                valorDeMilisegundo = Integer.parseInt(valorRead);
+            } else {
+                System.out.println("El valor del quatum debe ser entero, positivo y mayor a 0.");
+                System.out.println();
+            }
+        } while (valorDeMilisegundo == 0);
+
+        do {
+            System.out.println("Ingrese el valor del intercambio en milisegundos:");
+            String valorRead= reader.readLine();
+            if (valorRead.matches("^[1-9][0-9]*$")) {
+                valorIntercambio = Integer.parseInt(valorRead);
+            } else {
+                System.out.println("El valor del intercambio debe ser entero, positivo y mayor a 0.");
+                System.out.println();
+            }
+        } while (valorIntercambio == 0);
+
+
+        valorIntercambioQuantun = ((double)valorIntercambio / (double)valorDeMilisegundo);
+
+        int numeroDeProcesos = 0;
 		do {
 			System.out.println("Ingrese el numero de procesos:");
 			String numOperacionRead= reader.readLine();
