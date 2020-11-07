@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -13,35 +14,98 @@ class App {
     private ArrayList<Proceso> procesos = new ArrayList<Proceso>();
     private ArrayList<Proceso> colaDeGantt = new ArrayList<Proceso>();
     private ArrayList<Proceso> colaBloqueados = new ArrayList<Proceso>();
+    private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
 
-    void run () {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        /*TODO
-         * tiempo de llegada debe ser incremental y el primero siempre 0
-         * quatums nesesarios se le piden al usuario
-         * numero de entradas y salidas se le piden al usuario y si las ingresa se le debe de pedir quantumsgpu > 1
-         * el nombre lo generas (debe de ser unico)
-         * estado debe ser 0 inicialmente
-         * como minimo debe de haber un proceso
-          */
-        this.procesos.add(new Proceso(0,2,2,1,"P0",0));
-        this.procesos.add(new Proceso(25,3,0,0,"P1",0));
-        this.procesos.add(new Proceso(35,2,0,0,"P2",0));
-        // this.procesos.add(new Proceso(60,1,1,1,"test3",0));
-		/*
-		/*
-		int modoOperacion = 0;
+    void run () throws IOException {
+		int numeroDeProcesos = 0;
 
 		do {
-			System.out.println("Ingrese el modo de operacion debe ser 1 o 2:");
+			System.out.println("Ingrese el numero de procesos:");
 			String numOperacionRead= reader.readLine();
-			if (numOperacionRead.matches("^[1-2]$")) {
-				modoOperacion = Integer.parseInt(numOperacionRead);
+			if (numOperacionRead.matches("^[1-5]$")) {
+				numeroDeProcesos = Integer.parseInt(numOperacionRead);
 			} else {
-				System.out.println("El valor ingresado debe ser 1 o 2");
+				System.out.println("El numero de procesos debe de estar entre 1 o 5 y debe ser entero.");
+                System.out.println();
 			}
-		} while (modoOperacion == 0); */
+		} while (numeroDeProcesos == 0);
+
+		int tiempoDeLlegadaActual = 0;
+		for (int i = 0; i < numeroDeProcesos; i++) {
+           Proceso proceso = new Proceso();
+           String nombre = "P" + i;
+           proceso.setNombre(nombre);
+           boolean tiempoDeLlegadaAsignado = false;
+           if (i == 0) {
+               tiempoDeLlegadaAsignado = true;
+               proceso.setTiempoDeLlegada(0);
+               System.out.println("Se asigno 0 como tiempo de llegada al proceso " + nombre);
+               System.out.println();
+           }
+
+            while (!tiempoDeLlegadaAsignado) {
+                System.out.println("Porfavor Ingresa el tiempo de llegada para el proceso " + nombre);
+                String valorRead = reader.readLine();
+                if (valorRead.matches("^[0-9]*$")) {
+                    int valor = Integer.parseInt(valorRead);
+                    if (valor >= tiempoDeLlegadaActual) {
+                        proceso.setTiempoDeLlegada(valor);
+                        tiempoDeLlegadaActual = valor;
+                        tiempoDeLlegadaAsignado = true;
+                    } else {
+                        System.out.println("El valor del tiempo de llegadas debe ser positivo, entero y mayor o igual a " + tiempoDeLlegadaActual + ".");
+                        System.out.println();
+                    }
+
+                } else {
+                    System.out.println("El valor del tiempo de llegadas debe ser positivo, entero y mayor o igual a " + tiempoDeLlegadaActual + ".");
+                    System.out.println();
+                }
+            }
+
+            boolean quantumsNecesariosAsignado = false;
+
+            do {
+                System.out.println("Ingrese los quantums necesarios para el proceso " + nombre);
+                String valorRead= reader.readLine();
+                if (valorRead.matches("^[1-9][0-9]*$")) {
+                    proceso.setQuantumsNecesarios(Integer.parseInt(valorRead));
+                    quantumsNecesariosAsignado = true;
+                } else {
+                    System.out.println("El valor del tiempo de quantums necesarios debe ser positivo, entero y mayor a 0.");
+                    System.out.println();
+                }
+            } while (!quantumsNecesariosAsignado);
+
+            boolean numeroDeEntradasSalidasAsignado = false;
+
+            do {
+                System.out.println("Ingrese el numero de entradas y salidas para el proceso " + nombre);
+                String valorRead= reader.readLine();
+                if (valorRead.matches("^[0-9]*$")) {
+                    proceso.setNumeroDeEntradasSalidas(Integer.parseInt(valorRead));
+                    numeroDeEntradasSalidasAsignado = true;
+                } else {
+                    System.out.println("El valor de las entradas y salidas debe ser positivo y entero.");
+                    System.out.println();
+                }
+            } while (!numeroDeEntradasSalidasAsignado);
+
+            boolean gpuAsignado = false;
+            while (proceso.getNumeroDeEntradasSalidas() >= 1 && !gpuAsignado) {
+                System.out.println("Ingrese el numero de quatumns gpu para el proceso " + nombre);
+                String valorRead= reader.readLine();
+                if (valorRead.matches("^[1-9][0-9]*$")) {
+                    proceso.setQuantumsGpu(Integer.parseInt(valorRead));
+                    gpuAsignado = true;
+                } else {
+                    System.out.println("El valor de quantums gpu debe ser positivo, entero y mayor a 0.");
+                    System.out.println();
+                }
+            }
+            procesos.add(proceso);
+        }
 
         Proceso primerProceso = procesos.get(0);
         agregarProcesoAColaDeListos(primerProceso, 0);
@@ -62,6 +126,8 @@ class App {
                 this.agregarProcesoAColaDeBloqueados(procesoListo);
             }
         }
+
+        this.colaDeGantt.remove(colaDeGantt.size() -1);
         mostrarColaDeListo();
         mostrarDiagramaDeGantt();
         calcularTiempoDeVuelta();

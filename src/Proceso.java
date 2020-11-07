@@ -2,7 +2,7 @@ class Proceso {
     private int tiempoDeLlegada;
     private double quantumsNecesarios;
     private int numeroDeEntradasSalidas = 0;
-    private int quantumsGpu;
+    private int quantumsGpu = 0;
     private int inicio;
     private int terminacion;
     // estado 0 no ha entrado, 1 ya entro
