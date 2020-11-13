@@ -48,10 +48,10 @@ class App {
 		do {
 			System.out.println("Ingrese el numero de procesos:");
 			String numOperacionRead= reader.readLine();
-			if (numOperacionRead.matches("^[1-5]$")) {
+			if (numOperacionRead.matches("^[1-9]$")) {
 				numeroDeProcesos = Integer.parseInt(numOperacionRead);
 			} else {
-				System.out.println("El numero de procesos debe de estar entre 1 o 5 y debe ser entero.");
+				System.out.println("El numero de procesos debe de estar entre 1 o 9 y debe ser entero.");
                 System.out.println();
 			}
 		} while (numeroDeProcesos == 0);
@@ -141,7 +141,7 @@ class App {
                 this.guardarTiempo(procesoListo, i);
             }
             this.getProcesos();
-            if (procesoListo.getQuantumsNecesarios() > 1 && procesoListo.getEstado() != 3) {
+            if (procesoListo.getQuantumsNecesarios() > 1 && procesoListo.getEstado() == 0) {
                 this.agregarProcesoAColaDeListosBajarQuantum(procesoListo, 0);
             }
             this.getProcesosDesdeBloqueado();
@@ -248,7 +248,7 @@ class App {
     private void agregarProcesoAColaDeBloqueados(Proceso proceso) {
         int tiempoDeLlegada = proceso.getTerminacion() + (proceso.getNumeroDeEntradasSalidas() * this.valorDeMilisegundo);
         System.out.println("El proceso " + proceso.getNombre() + "estara bloqueado desde el milisegundo " + tiempoSimulado + " hasta " + tiempoDeLlegada);
-        this.colaBloqueados.add(new Proceso(tiempoDeLlegada, proceso.getQuantumsNecesarios() + proceso.getQuantumsGpu() -1, proceso.getNumeroDeEntradasSalidas(), proceso.getQuantumsGpu(), proceso.getNombre(), 0));
+        this.colaBloqueados.add(new Proceso(tiempoDeLlegada, proceso.getQuantumsGpu(), proceso.getNumeroDeEntradasSalidas(), proceso.getQuantumsGpu(), proceso.getNombre(), 0));
         ordenarColaDeBloqueadosPorOrdenDeLLegada();
     }
 
