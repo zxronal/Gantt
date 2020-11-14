@@ -158,10 +158,10 @@ class App {
                 this.guardarTiempo(procesoListo, i);
             }
             this.getProcesos();
+            this.getProcesosDesdeBloqueado();
             if (procesoListo.getQuantumsNecesarios() > 1 && procesoListo.getEstado() == 0) {
                 this.agregarProcesoAColaDeListosBajarQuantum(procesoListo, 0);
             }
-            this.getProcesosDesdeBloqueado();
             this.getProcesosFueraDeRango(i);
 
             if (procesoListo.getQuantumsNecesarios() == 1 && !procesoListo.getEntradasYsalidas().isEmpty() && procesoListo.getEstado() == 0) {
@@ -191,6 +191,7 @@ class App {
             if (p.getTiempoDeLlegada() <= tiempoSimulado && p.getEstado() == 0) {
                 int estado = 2;
                 if(!p.getEntradasYsalidas().isEmpty()) {
+                    p.getEntradasYsalidas().remove(0);
                     estado = 0;
                 }
                 agregarProcesoAColaDeListos(p, estado);
@@ -232,6 +233,7 @@ class App {
             int estado = 2;
             if(!pr.getEntradasYsalidas().isEmpty()) {
                 estado = 0;
+                pr.getEntradasYsalidas().remove(0);
             }
             this.agregarProcesoAColaDeListos(pr, estado);
         }
@@ -272,7 +274,7 @@ class App {
 
 // Mirar lo de quatums adicionales gpu
     private void agregarProcesoAColaDeBloqueados(Proceso proceso) {
-        EntradaSalida entradaSalida = proceso.getEntradasYsalidas().remove(0);
+        EntradaSalida entradaSalida = proceso.getEntradasYsalidas().get(0);
         // Ronal validar q ya se halla ejecutado el intercambio
         int tiempoDeLlegada = proceso.getTerminacion() + (entradaSalida.quantumsEntradaSalida * this.valorDeMilisegundo) + valorIntercambio;
         System.out.println("El proceso " + proceso.getNombre() + "estara bloqueado desde el milisegundo " + tiempoSimulado + " hasta " + tiempoDeLlegada);

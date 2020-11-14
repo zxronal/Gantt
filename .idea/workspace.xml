@@ -6,13 +6,9 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb552069-c400-403b-aba6-fd4842f55190" name="Default Changelist" comment="Fix 1">
+    <list default="true" id="fb552069-c400-403b-aba6-fd4842f55190" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RoundRobin/App$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RoundRobin/App$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RoundRobin/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RoundRobin/App.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RoundRobin/Proceso.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RoundRobin/Proceso.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Proceso.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Proceso.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -43,8 +39,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/App.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="507">
-              <caret line="219" column="5" lean-forward="true" selection-start-line="219" selection-start-column="5" selection-end-line="219" selection-end-column="5" />
+            <state relative-caret-position="-4">
+              <caret line="175" selection-start-line="175" selection-end-line="175" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -71,6 +67,8 @@
       <find>1</find>
       <find>2</find>
       <find>setTer</find>
+      <find>p.getEntradasYsalidas().remove(0);</find>
+      <find>getEntradasYsalidas().remove(0);</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -87,10 +85,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="182" />
-    <option name="y" value="67" />
-    <option name="width" value="1134" />
-    <option name="height" value="457" />
+    <option name="x" value="116" />
+    <option name="y" value="567" />
+    <option name="width" value="1537" />
+    <option name="height" value="458" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -200,7 +198,7 @@
       <workItem from="1604718466577" duration="7382000" />
       <workItem from="1604818144134" duration="165000" />
       <workItem from="1605237135220" duration="15033000" />
-      <workItem from="1605317430103" duration="2786000" />
+      <workItem from="1605317430103" duration="6538000" />
     </task>
     <task id="LOCAL-00001" summary="Se ordeno la cola de bloqueados">
       <created>1604688152324</created>
@@ -237,17 +235,23 @@
       <option name="project" value="LOCAL" />
       <updated>1605241653248</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Fix 2">
+      <created>1605320546493</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1605320546493</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="78515000" />
+    <option name="totallyTimeSpent" value="82267000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="23" width="1550" height="848" extended-state="6" />
-    <editor active="true" />
+    <frame x="93" y="454" width="1229" height="366" extended-state="1" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18389262" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23438837" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -257,7 +261,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32960895" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.78205127" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.041899443" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.8717949" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -334,7 +338,8 @@
     <MESSAGE value="Se incluyo la entrada de datos por parte del usuario." />
     <MESSAGE value="Se piden los datos." />
     <MESSAGE value="Fix 1" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix 1" />
+    <MESSAGE value="Fix 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix 2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -443,8 +448,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/App.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="507">
-          <caret line="219" column="5" lean-forward="true" selection-start-line="219" selection-start-column="5" selection-end-line="219" selection-end-column="5" />
+        <state relative-caret-position="-4">
+          <caret line="175" selection-start-line="175" selection-end-line="175" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
