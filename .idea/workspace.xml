@@ -6,11 +6,13 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb552069-c400-403b-aba6-fd4842f55190" name="Default Changelist" comment="Se piden los datos.">
+    <list default="true" id="fb552069-c400-403b-aba6-fd4842f55190" name="Default Changelist" comment="Fix 1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RoundRobin/App$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RoundRobin/App$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RoundRobin/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RoundRobin/App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RoundRobin/Proceso.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RoundRobin/Proceso.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Proceso.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Proceso.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,11 +26,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Proceso.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-365">
+              <caret line="9" column="107" selection-start-line="9" selection-start-column="107" selection-end-line="9" selection-end-column="107" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1574#1575#0" expanded="true" />
+                <element signature="e#1603#1604#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/App.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="158" column="33" lean-forward="true" selection-start-line="158" selection-start-column="33" selection-end-line="158" selection-end-column="33" />
+            <state relative-caret-position="507">
+              <caret line="219" column="5" lean-forward="true" selection-start-line="219" selection-start-column="5" selection-end-line="219" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -52,8 +68,9 @@
       <find>public</find>
       <find>dibujarRayitas</find>
       <find>3</find>
-      <find>2</find>
       <find>1</find>
+      <find>2</find>
+      <find>setTer</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -70,10 +87,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="715" />
-    <option name="y" value="58" />
-    <option name="width" value="1073" />
-    <option name="height" value="945" />
+    <option name="x" value="182" />
+    <option name="y" value="67" />
+    <option name="width" value="1134" />
+    <option name="height" value="457" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -82,6 +99,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -94,11 +112,16 @@
               <item name="Gantt" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Gantt" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Gantt" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Proceso.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -176,7 +199,8 @@
       <workItem from="1604686704602" duration="2175000" />
       <workItem from="1604718466577" duration="7382000" />
       <workItem from="1604818144134" duration="165000" />
-      <workItem from="1605237135220" duration="3856000" />
+      <workItem from="1605237135220" duration="15033000" />
+      <workItem from="1605317430103" duration="2786000" />
     </task>
     <task id="LOCAL-00001" summary="Se ordeno la cola de bloqueados">
       <created>1604688152324</created>
@@ -206,17 +230,24 @@
       <option name="project" value="LOCAL" />
       <updated>1604757963687</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Fix 1">
+      <created>1605241653248</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1605241653248</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="64552000" />
+    <option name="totallyTimeSpent" value="78515000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="23" width="1550" height="848" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17919463" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18389262" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -224,9 +255,9 @@
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30167598" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.49839744" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32960895" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.78205127" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.041899443" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -235,7 +266,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Terminal" order="10" weight="0.32960895" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.47346368" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.29189944" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -302,7 +333,8 @@
     <MESSAGE value="Se ordeno la cola de bloqueados y se cambio el nombre del proyecto." />
     <MESSAGE value="Se incluyo la entrada de datos por parte del usuario." />
     <MESSAGE value="Se piden los datos." />
-    <option name="LAST_COMMIT_MESSAGE" value="Se piden los datos." />
+    <MESSAGE value="Fix 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix 1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -311,6 +343,12 @@
           <url>file://$PROJECT_DIR$/src/RoundRobin.java</url>
           <properties field="numHilo" class="Interceptions" />
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/App.java</url>
+          <line>175</line>
+          <properties />
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -393,15 +431,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Proceso.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="27" lean-forward="true" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
+        <state relative-caret-position="-365">
+          <caret line="9" column="107" selection-start-line="9" selection-start-column="107" selection-end-line="9" selection-end-column="107" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1574#1575#0" expanded="true" />
+            <element signature="e#1603#1604#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/App.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="158" column="33" lean-forward="true" selection-start-line="158" selection-start-column="33" selection-end-line="158" selection-end-column="33" />
+        <state relative-caret-position="507">
+          <caret line="219" column="5" lean-forward="true" selection-start-line="219" selection-start-column="5" selection-end-line="219" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

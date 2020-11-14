@@ -103,31 +103,48 @@ class App {
                 }
             } while (!quantumsNecesariosAsignado);
 
-            boolean numeroDeEntradasSalidasAsignado = false;
+            int numeroDeEntradaYSalidas = -1;
 
             do {
-                System.out.println("Ingrese el numero de entradas y salidas para el proceso " + nombre);
+                System.out.println("Ingrese la cantidad de entradas y salidas para el proceso: " + nombre);
                 String valorRead= reader.readLine();
                 if (valorRead.matches("^[0-9]*$")) {
-                    proceso.setNumeroDeEntradasSalidas(Integer.parseInt(valorRead));
-                    numeroDeEntradasSalidasAsignado = true;
+                    numeroDeEntradaYSalidas = Integer.parseInt(valorRead);
                 } else {
-                    System.out.println("El valor de las entradas y salidas debe ser positivo y entero.");
+                    System.out.println("La cantidad de entrada y de salidas debe ser entero y mayor o igual a 0.");
                     System.out.println();
                 }
-            } while (!numeroDeEntradasSalidasAsignado);
+            } while (numeroDeEntradaYSalidas == -1);
 
-            boolean gpuAsignado = false;
-            while (proceso.getNumeroDeEntradasSalidas() >= 1 && !gpuAsignado) {
-                System.out.println("Ingrese el numero de quatumns gpu para el proceso " + nombre);
-                String valorRead= reader.readLine();
-                if (valorRead.matches("^[1-9][0-9]*$")) {
-                    proceso.setQuantumsGpu(Integer.parseInt(valorRead));
-                    gpuAsignado = true;
-                } else {
-                    System.out.println("El valor de quantums gpu debe ser positivo, entero y mayor a 0.");
-                    System.out.println();
+
+            for (int j= 0; j < numeroDeEntradaYSalidas; j++ ) {
+                EntradaSalida entradaSalida = new EntradaSalida();
+                boolean numeroDeEntradasSalidasAsignado = false;
+                do {
+                    System.out.println("Ingrese la cantidad quantums para la entrada y salida " + (j+1) + " del proceso " + nombre);
+                    String valorRead= reader.readLine();
+                    if (valorRead.matches("^[1-9][0-9]*$")) {
+                        entradaSalida.quantumsEntradaSalida = Integer.parseInt(valorRead);
+                        numeroDeEntradasSalidasAsignado = true;
+                    } else {
+                        System.out.println("La cantidad de quantums para la entrada y salida " + (j+1) + " del proceso " + nombre + " debe ser positivo y entero.");
+                        System.out.println();
+                    }
+                } while (!numeroDeEntradasSalidasAsignado);
+
+                boolean gpuAsignado = false;
+                while (!gpuAsignado) {
+                    System.out.println("Ingrese el numero de quatumns gpu para la entrada y salida " + (j+1)+ " del proceso " + nombre);
+                    String valorRead= reader.readLine();
+                    if (valorRead.matches("^[1-9][0-9]*$")) {
+                        entradaSalida.quantumsGpu = Integer.parseInt(valorRead);
+                        gpuAsignado = true;
+                    } else {
+                        System.out.println("El valor de quantums gpu debe ser positivo, entero y mayor a 0.");
+                        System.out.println();
+                    }
                 }
+                proceso.getEntradasYsalidas().add(entradaSalida);
             }
             procesos.add(proceso);
         }
@@ -147,7 +164,7 @@ class App {
             this.getProcesosDesdeBloqueado();
             this.getProcesosFueraDeRango(i);
 
-            if (procesoListo.getQuantumsNecesarios() == 1 && procesoListo.getNumeroDeEntradasSalidas() != 0 && procesoListo.getEstado() == 0) {
+            if (procesoListo.getQuantumsNecesarios() == 1 && !procesoListo.getEntradasYsalidas().isEmpty() && procesoListo.getEstado() == 0) {
                 this.agregarProcesoAColaDeBloqueados(procesoListo);
             }
         }
@@ -172,7 +189,11 @@ class App {
         for (int i = 0; i < this.colaBloqueados.size(); i++) {
             Proceso p = this.colaBloqueados.get(i);
             if (p.getTiempoDeLlegada() <= tiempoSimulado && p.getEstado() == 0) {
-                agregarProcesoAColaDeListos(p, 2);
+                int estado = 2;
+                if(!p.getEntradasYsalidas().isEmpty()) {
+                    estado = 0;
+                }
+                agregarProcesoAColaDeListos(p, estado);
             }
         }
     }
@@ -208,17 +229,21 @@ class App {
         }
         if (pr != null) {
             tiempoSimulado = pr.getTiempoDeLlegada();
-            this.agregarProcesoAColaDeListos(pr, 2);
+            int estado = 2;
+            if(!pr.getEntradasYsalidas().isEmpty()) {
+                estado = 0;
+            }
+            this.agregarProcesoAColaDeListos(pr, estado);
         }
     }
 
     private void agregarProcesoAColaDeListos(Proceso proceso, int estado) {
         proceso.setEstado(1);
-        colaDeGantt.add(new Proceso(proceso.getTiempoDeLlegada(), proceso.getQuantumsNecesarios(), proceso.getNumeroDeEntradasSalidas(), proceso.getQuantumsGpu(), proceso.getNombre(), estado));
+        colaDeGantt.add(new Proceso(proceso.getTiempoDeLlegada(), proceso.getQuantumsNecesarios(), proceso.getEntradasYsalidas(), proceso.getNombre(), estado));
     }
 
     private void agregarIntercambio(int i) {
-        Proceso quantium = new Proceso(tiempoSimulado, valorIntercambioQuantun, 0, 0, "intercambio", 3);
+        Proceso quantium = new Proceso(tiempoSimulado, valorIntercambioQuantun, null, "intercambio", 3);
         quantium.setInicio(this.tiempoSimulado);
         this.tiempoSimulado += valorIntercambio;
         quantium.setTerminacion(tiempoSimulado);
@@ -227,10 +252,11 @@ class App {
 
     private void agregarProcesoAColaDeListosBajarQuantum(Proceso proceso, int estado) {
         int tiempoDeLlegada = -1;
+        proceso.setEstado(1);
         if (proceso.getTerminacion() >= tiempoSimulado) {
             tiempoDeLlegada = proceso.getTerminacion();
         }
-        colaDeGantt.add(new Proceso(tiempoDeLlegada, proceso.getQuantumsNecesarios() -1, proceso.getNumeroDeEntradasSalidas(), proceso.getQuantumsGpu(), proceso.getNombre(), estado));
+        colaDeGantt.add(new Proceso(tiempoDeLlegada, proceso.getQuantumsNecesarios() -1, proceso.getEntradasYsalidas(), proceso.getNombre(), estado));
     }
 
     private void guardarTiempo(Proceso proceso, int i) {
@@ -246,9 +272,11 @@ class App {
 
 // Mirar lo de quatums adicionales gpu
     private void agregarProcesoAColaDeBloqueados(Proceso proceso) {
-        int tiempoDeLlegada = proceso.getTerminacion() + (proceso.getNumeroDeEntradasSalidas() * this.valorDeMilisegundo);
+        EntradaSalida entradaSalida = proceso.getEntradasYsalidas().remove(0);
+        // Ronal validar q ya se halla ejecutado el intercambio
+        int tiempoDeLlegada = proceso.getTerminacion() + (entradaSalida.quantumsEntradaSalida * this.valorDeMilisegundo) + valorIntercambio;
         System.out.println("El proceso " + proceso.getNombre() + "estara bloqueado desde el milisegundo " + tiempoSimulado + " hasta " + tiempoDeLlegada);
-        this.colaBloqueados.add(new Proceso(tiempoDeLlegada, proceso.getQuantumsGpu(), proceso.getNumeroDeEntradasSalidas(), proceso.getQuantumsGpu(), proceso.getNombre(), 0));
+        this.colaBloqueados.add(new Proceso(tiempoDeLlegada, entradaSalida.quantumsGpu, proceso.getEntradasYsalidas(), proceso.getNombre(), 0));
         ordenarColaDeBloqueadosPorOrdenDeLLegada();
     }
 
@@ -270,7 +298,8 @@ class App {
         for (int i = 0; i < this.procesos.size(); i++) {
             Proceso p = this.procesos.get(i);
             Proceso maxP = getProcesoMaxTerminal(p.getNombre());
-            Float vuelta = (float) (maxP.getTerminacion() - (p.getNumeroDeEntradasSalidas() * valorDeMilisegundo) - p.getTiempoDeLlegada());
+            // Ronal
+            Float vuelta = (float) (maxP.getTerminacion() - (p.getEntradasYsalidas().size() * valorDeMilisegundo) - p.getTiempoDeLlegada());
             System.out.println("TV" + p.getNombre() + "= " + vuelta + " Milisegundos");
             promedioVuelta += vuelta;
         }

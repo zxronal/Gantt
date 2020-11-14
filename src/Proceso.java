@@ -1,11 +1,13 @@
+import java.util.ArrayList;
+import java.util.List;
+
 class Proceso {
     private int tiempoDeLlegada;
     private double quantumsNecesarios;
-    private int numeroDeEntradasSalidas = 0;
-    private int quantumsGpu = 0;
+    private List<EntradaSalida> entradasYsalidas = new ArrayList<EntradaSalida>();
     private int inicio;
     private int terminacion;
-    // estado 0 no ha entrado, 1 ya entro
+    // estado 0 no ha entrado, 1 ya entro, 2 viene de bloqueado y no puede agregar mas procesos a bloqueado, 3 es una interrupcion,4 sifnifica q tiene q hacer otra entrada y salida
     private int estado = 0;
     // nombre unico
     private String nombre;
@@ -13,23 +15,14 @@ class Proceso {
     public Proceso() {
     }
 
-    public Proceso(int tiempoDeLlegada, double quantumsNecesarios, int numeroDeEntradasSalidas, int quantumsGpu, String nombre, int estado) {
+    public Proceso(int tiempoDeLlegada, double quantumsNecesarios, List<EntradaSalida> entradaSalidas, String nombre, int estado) {
         this.tiempoDeLlegada = tiempoDeLlegada;
         this.quantumsNecesarios = quantumsNecesarios;
-        this.numeroDeEntradasSalidas = numeroDeEntradasSalidas;
-        this.quantumsGpu = quantumsGpu;
+        this.entradasYsalidas = entradaSalidas;
         this.nombre = nombre;
         this.estado = estado;
     }
-/*
-    public Proceso(int quantumsNecesarios, int numeroDeEntradasSalidas, int quantumsGpu, String nombre, int estado) {
-        this.quantumsNecesarios = quantumsNecesarios;
-        this.numeroDeEntradasSalidas = numeroDeEntradasSalidas;
-        this.quantumsGpu = quantumsGpu;
-        this.nombre = nombre;
 
-    }
-*/
     public int getTiempoDeLlegada() {
         return tiempoDeLlegada;
     }
@@ -46,20 +39,12 @@ class Proceso {
         this.quantumsNecesarios = quantumsNecesarios;
     }
 
-    public int getNumeroDeEntradasSalidas() {
-        return numeroDeEntradasSalidas;
+    public List<EntradaSalida> getEntradasYsalidas() {
+        return entradasYsalidas;
     }
 
-    public void setNumeroDeEntradasSalidas(int numeroDeEntradasSalidas) {
-        this.numeroDeEntradasSalidas = numeroDeEntradasSalidas;
-    }
-
-    public int getQuantumsGpu() {
-        return quantumsGpu;
-    }
-
-    public void setQuantumsGpu(int quantumsGpu) {
-        this.quantumsGpu = quantumsGpu;
+    public void setEntradasYsalidas(List<EntradaSalida> entradasYsalidas) {
+        this.entradasYsalidas = entradasYsalidas;
     }
 
     public String getNombre() {
@@ -92,5 +77,18 @@ class Proceso {
 
     public void setTerminacion(int terminacion) {
         this.terminacion = terminacion;
+    }
+}
+
+class EntradaSalida {
+    public int quantumsEntradaSalida  = 0;
+    public int quantumsGpu = 0;
+
+    public EntradaSalida(int quantumsEntradaSalida, int quantumsGpu) {
+        this.quantumsEntradaSalida = quantumsEntradaSalida;
+        this.quantumsGpu = quantumsGpu;
+    }
+
+    public EntradaSalida() {
     }
 }
