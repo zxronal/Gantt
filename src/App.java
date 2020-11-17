@@ -245,7 +245,7 @@ class App {
     }
 
     private void agregarIntercambio(int i) {
-        Proceso quantium = new Proceso(tiempoSimulado, valorIntercambioQuantun, null, "intercambio", 3);
+        Proceso quantium = new Proceso(tiempoSimulado, valorIntercambioQuantun, new ArrayList<>(), "intercambio", 3);
         quantium.setInicio(this.tiempoSimulado);
         this.tiempoSimulado += valorIntercambio;
         quantium.setTerminacion(tiempoSimulado);
